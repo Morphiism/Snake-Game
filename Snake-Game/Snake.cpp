@@ -15,7 +15,7 @@ bool Snake::intersectSelf()
 
 bool Snake::intersectWall()
 {
-	if (body[0].pos.x < 0 || body[0].pos.x >= WIDTH || body[0].pos.y < 0 || body[0].pos.y >= HEIGHT)
+	if (body[0].pos.x == 0 || body[0].pos.x == WIDTH - 1 || body[0].pos.y == 0 || body[0].pos.y == HEIGHT - 1)
 	{
 		isAlive = false;
 		return true;

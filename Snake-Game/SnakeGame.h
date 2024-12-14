@@ -45,12 +45,13 @@ private:
 	bool intersectWall();
 
 public:
+	Snake() : length(1), isAlive(true) { body.push_back(Body(Point(WIDTH / 2, HEIGHT / 2), Point(1, 0))); }
 	Snake(Point p) : length(1), isAlive(true) { body.push_back(Body(p, Point(1, 0))); }
 	std::vector<Point> getPos() const { std::vector<Point> pos; for (auto& b : body) pos.push_back(b.pos); return pos; }
 	Point getHead() const { return body[0].pos; }
 	int getLength() const { return length; }
 	bool isDead() const { return !isAlive; }
-	void changeDir(Point& d) { body[0].changeDir(d); }
+	void changeDir(Point d) { body[0].changeDir(d); }
 	void move();
 	void grow() { body.push_back(Body(body.back().pos - body.back().dir, body.back().dir)); length++; }
 };
@@ -72,10 +73,25 @@ private:
 	GridPoint grid[WIDTH][HEIGHT];
 	void embedSnake(Snake& s);
 	void generateFood();
-	void deleteFood(Point p) { grid[p.y][p.x].isFood = false; }
+	void deleteFood(Point& p) { grid[p.y][p.x].isFood = false; }
 
 public:
 	Grid();
 	void update(Snake& s);
 	void print() const;
+};
+
+class Game
+{
+private:
+	Grid grid;
+	Snake snake;
+	char key;
+
+public:
+	Game();
+	void gaming();
+	void getKey();
+	void update();
+	void update(Point d);
 };
