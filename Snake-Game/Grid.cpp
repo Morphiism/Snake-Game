@@ -23,10 +23,14 @@ void Grid::embedSnake(Snake& s)
 
 void Grid::generateFood()
 {
+	std::random_device rng;
+	std::mt19937 gen(rng());
+	std::uniform_int_distribution<int> distX(1, WIDTH - 2);
+	std::uniform_int_distribution<int> distY(1, HEIGHT - 2);
 	while (true)
 	{
-		int x = rand() % WIDTH;
-		int y = rand() % HEIGHT;
+		int x = distX(gen);
+		int y = distY(gen);
 		if (!grid[x][y].isSnake)
 		{
 			grid[x][y].isFood = true;
@@ -57,7 +61,6 @@ void Grid::update(Snake& s)
 
 void Grid::print() const
 {
-	system("cls");
 	for (size_t i = 0; i < WIDTH; i++)
 	{
 		for (size_t j = 0; j < HEIGHT; j++)
@@ -67,7 +70,7 @@ void Grid::print() const
 			else if (grid[i][j].isHead)
 				std::cout << "H";
 			else if (grid[i][j].isSnake)
-				std::cout << "S";
+				std::cout << "B";
 			else if (grid[i][j].isFood)
 				std::cout << "F";
 			else

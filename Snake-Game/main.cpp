@@ -2,14 +2,13 @@
 
 int main()
 {
-	Grid grid;
-	Snake snake(Point(WIDTH / 2, HEIGHT / 2));
-	grid.update(snake);
-	grid.print();
+	std::cout << "按任意键开始游戏";
 
-	snake.move();
-	grid.update(snake);
-	grid.print();
+	Game game;
+	while (true)
+	{
+		game.gaming();
+	}
 
 	return 0;
 }

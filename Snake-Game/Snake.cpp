@@ -26,7 +26,7 @@ bool Snake::intersectWall()
 void Snake::move()
 {
 	body[0].move();
-	if (intersectWall())
+	if (intersectWall() || intersectSelf())
 		return;
 	for (size_t i = 1; i < body.size(); i++)
 	{
@@ -36,6 +36,4 @@ void Snake::move()
 			body[i].changeDir(body[i - 1].dir);
 		}
 	}
-	if (intersectSelf())
-		return;
 }

@@ -7,6 +7,7 @@
 #include <windows.h>
 #include <ctime>
 #include <cstdlib>
+#include <random>
 
 constexpr size_t WIDTH = 20;
 constexpr size_t HEIGHT = 40;
@@ -72,11 +73,11 @@ class Grid
 private:
 	GridPoint grid[WIDTH][HEIGHT];
 	void embedSnake(Snake& s);
-	void generateFood();
-	void deleteFood(Point& p) { grid[p.y][p.x].isFood = false; }
+	void deleteFood(Point& p) { grid[p.x][p.y].isFood = false; }
 
 public:
 	Grid();
+	void generateFood();
 	void update(Snake& s);
 	void print() const;
 };
@@ -86,12 +87,14 @@ class Game
 private:
 	Grid grid;
 	Snake snake;
-	char key;
+	int key;
+	void waitKey();
+	void getKey();
 
 public:
 	Game();
+	void init();
 	void gaming();
-	void getKey();
 	void update();
-	void update(Point d);
+	void print() const;
 };
