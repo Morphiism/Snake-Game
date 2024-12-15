@@ -23,7 +23,7 @@ bool Snake::intersectWall()
 	return false;
 }
 
-void Snake::move()
+void Snake::move() // todo: 快速转弯时的显示问题
 {
 	body[0].move();
 	if (intersectWall() || intersectSelf())
