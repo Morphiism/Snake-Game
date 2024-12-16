@@ -68,7 +68,7 @@ void Game::gaming()
 
 	while (!snake.isDead())
 	{
-		Sleep(200);
+		Sleep(100);
 		getKey();
 		if (key == 27)
 			break;
