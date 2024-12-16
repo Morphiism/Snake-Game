@@ -33,7 +33,7 @@ struct Body
 	void operator=(const Body& b) { pos = b.pos; dir = b.dir; }
 	void move() { pos = pos + dir; }
 	Body moved() const { return Body(pos + dir, dir); }
-	void changeDir(Point& d) { dir = d; }
+	void changeDir(Point d) { dir = d; }
 };
 
 class Snake
@@ -50,6 +50,7 @@ public:
 	Snake(Point p) : length(1), isAlive(true) { body.push_back(Body(p, Point(1, 0))); }
 	std::vector<Point> getPos() const { std::vector<Point> pos; for (auto& b : body) pos.push_back(b.pos); return pos; }
 	Point getHead() const { return body[0].pos; }
+	Point getDir() const { return body[0].dir; }
 	int getLength() const { return length; }
 	bool isDead() const { return !isAlive; }
 	void changeDir(Point d) { body[0].changeDir(d); }
@@ -92,7 +93,7 @@ private:
 	void getKey();
 
 public:
-	Game();
+	Game() { key = 0; }
 	void init();
 	void gaming();
 	void update();

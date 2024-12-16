@@ -1,12 +1,5 @@
 #include "SnakeGame.h"
 
-Game::Game()
-{
-	grid = Grid();
-	snake = Snake(Point(WIDTH / 2, HEIGHT / 2));
-	key = 0;
-}
-
 void Game::init()
 {
 	grid = Grid();
@@ -30,13 +23,13 @@ void Game::getKey()
 
 void Game::update()
 {
-	if (key == 'w')
+	if (key == 'w' && (snake.getLength() == 1 || snake.getDir() != Point(1, 0)))
 		snake.changeDir(Point(-1, 0));
-	else if (key == 's')
+	else if (key == 's' && (snake.getLength() == 1 || snake.getDir() != Point(-1, 0)))
 		snake.changeDir(Point(1, 0));
-	else if (key == 'a')
+	else if (key == 'a' && (snake.getLength() == 1 || snake.getDir() != Point(0, 1)))
 		snake.changeDir(Point(0, -1));
-	else if (key == 'd')
+	else if (key == 'd' && (snake.getLength() == 1 || snake.getDir() != Point(0, -1)))
 		snake.changeDir(Point(0, 1));
 	snake.move();
 	grid.update(snake);
@@ -46,6 +39,7 @@ void Game::update()
 void Game::print() const
 {
 	system("cls");
+	grid.print();
 	COORD coord;
 	coord.X = HEIGHT + 2;
 	coord.Y = WIDTH / 2;
@@ -54,10 +48,6 @@ void Game::print() const
 	coord.Y = WIDTH / 2 + 2;
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 	std::cout << "当前长度：" << snake.getLength();
-	coord.X = 0;
-	coord.Y = 0;
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
-	grid.print();
 }
 
 void Game::gaming()
@@ -68,7 +58,7 @@ void Game::gaming()
 
 	while (!snake.isDead())
 	{
-		Sleep(100);
+		Sleep(200);
 		getKey();
 		if (key == 27)
 			break;

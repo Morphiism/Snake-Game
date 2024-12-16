@@ -31,7 +31,7 @@ void Grid::generateFood()
 	{
 		int x = distX(gen);
 		int y = distY(gen);
-		if (!grid[x][y].isSnake)
+		if (!grid[x][y].isSnake && !grid[x][y].isFood)
 		{
 			grid[x][y].isFood = true;
 			break;

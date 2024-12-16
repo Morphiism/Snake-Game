@@ -23,7 +23,7 @@ bool Snake::intersectWall()
 	return false;
 }
 
-void Snake::move() // Bug: Display issues during quick turns
+void Snake::move()
 {
 	body[0].move();
 	if (intersectWall() || intersectSelf())
@@ -33,7 +33,7 @@ void Snake::move() // Bug: Display issues during quick turns
 		body[i].move();
 		if (body[i].moved().pos != body[i - 1].pos)
 		{
-			body[i].changeDir(body[i - 1].dir);
+			body[i].changeDir(body[i - 1].pos - body[i].pos);
 		}
 	}
 }
