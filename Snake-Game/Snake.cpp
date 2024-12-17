@@ -37,3 +37,9 @@ void Snake::move()
 		}
 	}
 }
+
+int Snake::getSpeed() const
+{
+	int speed = int(200 * pow(0.9, length / 5));
+	return speed;
+}

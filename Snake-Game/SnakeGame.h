@@ -53,6 +53,7 @@ public:
 	Point getHead() const { return body[0].pos; }
 	Point getDir() const { return body[0].dir; }
 	int getLength() const { return length; }
+	int getSpeed() const;
 	bool isDead() const { return !isAlive; }
 	void changeDir(Point d) { body[0].changeDir(d); }
 	void move();

@@ -52,6 +52,8 @@ void Game::print() const
 	file.close();
 	pointat(HEIGHT + 2, 3);
 	std::cout << "最大长度：" << highest;
+	pointat(HEIGHT + 2, 5);
+	std::cout << "当前速度：" << snake.getSpeed() << " ms/it";
 }
 
 void Game::gaming()
@@ -60,11 +62,11 @@ void Game::gaming()
 	waitKey();
 	getKey();
 	SetConsoleTitle(TEXT("贪吃蛇（按ESC键结束游戏）"));
-	grid.generateFood(2);
+	grid.generateFood(3);
 
 	while (!snake.isDead())
 	{
-		Sleep(200);
+		Sleep(snake.getSpeed());
 		getKey();
 		if (key == 27)
 			break;
