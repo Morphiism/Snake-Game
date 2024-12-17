@@ -61,7 +61,7 @@ void Game::gaming()
 	init();
 	waitKey();
 	getKey();
-	SetConsoleTitle(TEXT("贪吃蛇（按ESC键结束游戏）"));
+	SetConsoleTitle(TEXT("贪吃蛇（按ESC键暂停游戏）"));
 	grid.generateFood(3);
 
 	while (!snake.isDead())
@@ -69,7 +69,14 @@ void Game::gaming()
 		Sleep(snake.getSpeed());
 		getKey();
 		if (key == 27)
-			break;
+		{
+			SetConsoleTitle(TEXT("按任意键继续，按ESC键结束游戏"));
+			waitKey();
+			getKey();
+			if (key == 27)
+				break;
+			SetConsoleTitle(TEXT("贪吃蛇（按ESC键暂停游戏）"));
+		}
 		update();
 		print();
 	}
