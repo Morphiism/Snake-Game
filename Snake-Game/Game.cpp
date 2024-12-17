@@ -52,6 +52,7 @@ void Game::print() const
 	std::ifstream file("highest.dat");
 	int highest;
 	file >> highest;
+	highest = max(highest, 1);
 	file.close();
 	coord.Y = 3;
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
@@ -86,6 +87,7 @@ void Game::gaming()
 	std::ifstream file("highest.dat");
 	int highest;
 	file >> highest;
+	highest = max(highest, 1);
 	file.close();
 	if (length > highest)
 	{
