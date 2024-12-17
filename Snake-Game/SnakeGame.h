@@ -79,7 +79,7 @@ private:
 
 public:
 	Grid();
-	void generateFood();
+	void generateFood(size_t num = 1);
 	void update(Snake& s);
 	void print() const;
 };
@@ -100,3 +100,11 @@ public:
 	void update();
 	void print() const;
 };
+
+inline void pointat(size_t x, size_t y)
+{
+	COORD coord;
+	coord.X = x;
+	coord.Y = y;
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+}

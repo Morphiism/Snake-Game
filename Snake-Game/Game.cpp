@@ -41,21 +41,16 @@ void Game::print() const
 {
 	system("cls");
 	grid.print();
-	COORD coord;
-	coord.X = HEIGHT + 2;
-	coord.Y = WIDTH / 2;
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+	pointat(HEIGHT + 2, WIDTH / 2);
 	std::cout << "按WASD控制方向";
-	coord.Y = 1;
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+	pointat(HEIGHT + 2, 1);
 	std::cout << "当前长度：" << snake.getLength();
 	std::ifstream file("highest.dat");
 	int highest;
 	file >> highest;
 	highest = max(highest, 1);
 	file.close();
-	coord.Y = 3;
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+	pointat(HEIGHT + 2, 3);
 	std::cout << "最大长度：" << highest;
 }
 
@@ -65,7 +60,7 @@ void Game::gaming()
 	waitKey();
 	getKey();
 	SetConsoleTitle(TEXT("贪吃蛇（按ESC键结束游戏）"));
-	grid.generateFood();
+	grid.generateFood(2);
 
 	while (!snake.isDead())
 	{
@@ -78,10 +73,7 @@ void Game::gaming()
 	}
 
 	int length = snake.getLength();
-	COORD coord;
-	coord.X = HEIGHT + 2;
-	coord.Y = WIDTH - 4;
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+	pointat(HEIGHT + 2, WIDTH / 2 + 2);
 	std::cout << "游戏结束！您的最终长度为：" << length;
 	SetConsoleTitle(TEXT("按任意键重新开始"));
 	std::ifstream file("highest.dat");
@@ -91,8 +83,7 @@ void Game::gaming()
 	file.close();
 	if (length > highest)
 	{
-		coord.Y = WIDTH - 2;
-		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+		pointat(HEIGHT + 2, WIDTH / 2 + 4);
 		std::cout << "新纪录！";
 		std::ofstream file("highest.dat");
 		file << length;

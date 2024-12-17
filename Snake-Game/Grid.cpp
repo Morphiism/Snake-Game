@@ -21,20 +21,21 @@ void Grid::embedSnake(Snake& s)
 	}
 }
 
-void Grid::generateFood()
+void Grid::generateFood(size_t num)
 {
 	std::random_device rng;
 	std::mt19937 gen(rng());
 	std::uniform_int_distribution<int> distX(1, WIDTH - 2);
 	std::uniform_int_distribution<int> distY(1, HEIGHT - 2);
-	while (true)
+	size_t count = 0;
+	while (count < num)
 	{
 		int x = distX(gen);
 		int y = distY(gen);
 		if (!grid[x][y].isSnake && !grid[x][y].isFood)
 		{
 			grid[x][y].isFood = true;
-			break;
+			count++;
 		}
 	}
 }
