@@ -74,7 +74,7 @@ void Grid::print() const
 			else if (grid[i][j].isFood)
 				std::cout << "F";
 			else
-				std::cout << ".";
+				std::cout << " ";
 		}
 		std::cout << std::endl;
 	}
