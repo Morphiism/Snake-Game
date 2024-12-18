@@ -6,7 +6,8 @@ void Game::init()
 	grid = Grid();
 	snake = Snake(Point(WIDTH / 2, HEIGHT / 2), snake.getInitSpeed());
 	grid.generateFood(foodNum);
-	grid.generatePotion(potionNum);
+	grid.generatePotion(poisonNum);
+	grid.generateWall(wallNum);
 }
 
 void Game::waitKey()
@@ -62,7 +63,7 @@ void Game::print() const
 		break;
 	}
 	std::cout << foodNum << "食物 ";
-	std::cout << potionNum << "毒药";
+	std::cout << poisonNum << "毒药";
 	pointat(HEIGHT + 2, 3);
 	std::cout << "当前长度：" << snake.getLength()
 		<< " 当前分数：" << std::fixed << std::setprecision(0) << score;

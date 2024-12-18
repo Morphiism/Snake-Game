@@ -5,7 +5,8 @@ int main()
 	int speedMode;
 	int speed;
 	int foodNum;
-	int potionNum;
+	int poisonNum;
+	int wallNum;
 	while (true)
 	{
 		system("cls");
@@ -36,15 +37,22 @@ int main()
 			foodNum = 1;
 		}
 		std::cout << "请输入毒药数量：" << std::endl;
-		std::cin >> potionNum;
-		if (potionNum < 0)
+		std::cin >> poisonNum;
+		if (poisonNum < 0)
 		{
 			std::cout << "不支持的输入，毒药数量默认为0" << std::endl;
-			potionNum = 0;
+			poisonNum = 0;
+		}
+		std::cout << "请输入障碍物数量：" << std::endl;
+		std::cin >> wallNum;
+		if (wallNum < 0)
+		{
+			std::cout << "不支持的输入，障碍物数量默认为0" << std::endl;
+			wallNum = 0;
 		}
 		std::cout << "设置成功，按任意键开始游戏" << std::endl;
 
-		Game game(speed, foodNum, potionNum);
+		Game game(speed, foodNum, poisonNum, wallNum);
 		game.gaming();
 	}
 

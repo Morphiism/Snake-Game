@@ -35,7 +35,8 @@ void Grid::generateFood(size_t num)
 	{
 		int x = distX(gen);
 		int y = distY(gen);
-		if (!grid[x][y].isBody && !grid[x][y].isFood && !grid[x][y].isPotion && !grid[x][y].isHead)
+		if (!grid[x][y].isBody && !grid[x][y].isFood && !grid[x][y].isPotion &&
+			!grid[x][y].isHead && !grid[x][y].isWall)
 		{
 			grid[x][y].isFood = true;
 			count++;
@@ -50,9 +51,26 @@ void Grid::generatePotion(size_t num)
 	{
 		int x = distX(gen);
 		int y = distY(gen);
-		if (!grid[x][y].isBody && !grid[x][y].isFood && !grid[x][y].isPotion && !grid[x][y].isHead)
+		if (!grid[x][y].isBody && !grid[x][y].isFood && !grid[x][y].isPotion &&
+			!grid[x][y].isHead && !grid[x][y].isWall)
 		{
 			grid[x][y].isPotion = true;
+			count++;
+		}
+	}
+}
+
+void Grid::generateWall(size_t num)
+{
+	size_t count = 0;
+	while (count < num)
+	{
+		int x = distX(gen);
+		int y = distY(gen);
+		if (!grid[x][y].isBody && !grid[x][y].isFood && !grid[x][y].isPotion &&
+			!grid[x][y].isHead && !grid[x][y].isWall)
+		{
+			grid[x][y].isWall = true;
 			count++;
 		}
 	}
