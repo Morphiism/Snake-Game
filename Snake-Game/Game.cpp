@@ -34,7 +34,12 @@ void Game::update()
 	else if (key == 'd' && (snake.getLength() == 1 || snake.getDir() != Point(0, -1)))
 		snake.changeDir(Point(0, 1));
 	snake.move();
+	int length = snake.getLength();
 	grid.update(snake);
+	if (snake.getLength() > length)
+	{
+		score += int(10 * getMultiplier());
+	}
 	key = 0;
 }
 
@@ -61,16 +66,18 @@ void Game::print() const
 	std::cout << foodNum << "食物 ";
 	std::cout << potionNum << "毒药";
 	pointat(HEIGHT + 2, 3);
-	std::cout << "当前长度：" << snake.getLength();
+	std::cout << "当前长度：" << snake.getLength()
+		<< " 当前分数：" << std::fixed << std::setprecision(0) << score;
+	std::cout << std::setprecision(2) << " (" << getMultiplier() << "x)";
 	std::ifstream file("highest.dat");
-	int highest;
+	double highest;
 	file >> highest;
 	highest = max(highest, 0);
 	file.close();
 	pointat(HEIGHT + 2, 5);
-	std::cout << "最大长度：" << highest;
+	std::cout << "最高分：" << std::fixed << std::setprecision(0) << highest;
 	pointat(HEIGHT + 2, 7);
-	std::cout << "当前速度：" << snake.getSpeed() << " ms/it";
+	std::cout << "当前速度：" << snake.getSpeed() << " (ms/it)";
 }
 
 void Game::gaming()
@@ -97,21 +104,20 @@ void Game::gaming()
 		print();
 	}
 
-	int length = snake.getLength();
 	pointat(HEIGHT + 2, WIDTH / 2 + 2);
-	std::cout << "游戏结束！您的最终长度为：" << length;
+	std::cout << "游戏结束！您的分数为：" << std::fixed << std::setprecision(0) << score;
 	SetConsoleTitle(TEXT("按任意键重新开始"));
 	std::ifstream file("highest.dat");
-	int highest;
+	double highest;
 	file >> highest;
 	highest = max(highest, 0);
 	file.close();
-	if (length > highest)
+	if (score > highest)
 	{
 		pointat(HEIGHT + 2, WIDTH / 2 + 4);
 		std::cout << "新纪录！";
 		std::ofstream file("highest.dat");
-		file << length;
+		file << score;
 		file.close();
 	}
 	waitKey();

@@ -10,6 +10,7 @@
 #include <ctime>
 #include <cstdlib>
 #include <random>
+#include <iomanip>
 
 constexpr size_t WIDTH = 20;
 constexpr size_t HEIGHT = 40;
@@ -45,8 +46,6 @@ private:
 	int length = 1;
 	int initSpeed = 200;
 	bool isAlive = true;
-	bool intersectSelf();
-	bool intersectWall();
 
 public:
 	Snake() { body.push_back(Body(Point(WIDTH / 2, HEIGHT / 2), Point(1, 0))); }
@@ -59,6 +58,7 @@ public:
 	int getInitSpeed() const { return initSpeed; }
 	int getSpeed() const { return int(initSpeed * pow(0.9, length / 5)); }
 	bool isDead() const { return !isAlive || length == 0; }
+	void die() { isAlive = false; }
 	void changeDir(Point d) { body[0].changeDir(d); }
 	void move();
 	void grow() { body.push_back(Body(body.back().pos - body.back().dir, body.back().dir)); length++; }
@@ -69,7 +69,7 @@ struct GridPoint
 {
 	Point pos;
 	bool isHead = false;
-	bool isSnake = false;
+	bool isBody = false;
 	bool isWall = false;
 	bool isFood = false;
 	bool isPotion = false;
@@ -97,6 +97,8 @@ class Game
 private:
 	Grid grid;
 	Snake snake;
+	double multiplier = 1.0;
+	double score = 0.0;
 	int key = 0;
 	int foodNum = 1;
 	int potionNum = 0;
@@ -110,6 +112,11 @@ public:
 	void gaming();
 	void update();
 	void print() const;
+	double getMultiplier() const
+	{
+		return (1.0 - 0.02 * (foodNum - 1) + 0.2 * potionNum) *
+			pow(1.1, snake.getLength() / 5) * (200.0 / snake.getInitSpeed());
+	}
 };
 
 inline void pointat(size_t x, size_t y)
