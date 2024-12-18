@@ -41,19 +41,22 @@ class Snake
 {
 private:
 	std::vector<Body> body;
-	int length;
-	bool isAlive;
+	int length = 1;
+	int initSpeed = 200;
+	bool isAlive = true;
 	bool intersectSelf();
 	bool intersectWall();
 
 public:
-	Snake() : length(1), isAlive(true) { body.push_back(Body(Point(WIDTH / 2, HEIGHT / 2), Point(1, 0))); }
-	Snake(Point p) : length(1), isAlive(true) { body.push_back(Body(p, Point(1, 0))); }
+	Snake() { body.push_back(Body(Point(WIDTH / 2, HEIGHT / 2), Point(1, 0))); }
+	Snake(Point p) { body.push_back(Body(p, Point(1, 0))); }
+	Snake(Point p, int s) : initSpeed(s) { body.push_back(Body(p, Point(1, 0))); }
 	std::vector<Point> getPos() const { std::vector<Point> pos; for (auto& b : body) pos.push_back(b.pos); return pos; }
 	Point getHead() const { return body[0].pos; }
 	Point getDir() const { return body[0].dir; }
 	int getLength() const { return length; }
-	int getSpeed() const;
+	int getInitSpeed() const { return initSpeed; }
+	int getSpeed() const { return int(initSpeed * pow(0.9, length / 5)); }
 	bool isDead() const { return !isAlive; }
 	void changeDir(Point d) { body[0].changeDir(d); }
 	void move();
@@ -63,12 +66,12 @@ public:
 struct GridPoint
 {
 	Point pos;
-	bool isHead;
-	bool isSnake;
-	bool isFood;
+	bool isHead = false;
+	bool isSnake = false;
+	bool isFood = false;
 
-	GridPoint() : pos(Point(0, 0)), isHead(false), isSnake(false), isFood(false) {}
-	GridPoint(Point p) : pos(p), isHead(false), isSnake(false), isFood(false) {}
+	GridPoint() : pos(Point(0, 0)) {}
+	GridPoint(Point p) : pos(p) {}
 };
 
 class Grid
@@ -90,12 +93,14 @@ class Game
 private:
 	Grid grid;
 	Snake snake;
-	int key;
+	int key = 0;
+	int foodNum = 1;
 	void waitKey();
 	void getKey();
 
 public:
-	Game() { key = 0; }
+	Game() {}
+	Game(int s, int food) : foodNum(food) { snake = Snake(Point(WIDTH / 2, HEIGHT / 2), s); }
 	void init();
 	void gaming();
 	void update();
