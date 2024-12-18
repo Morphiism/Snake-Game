@@ -1,5 +1,10 @@
 #include "SnakeGame.h"
 
+std::random_device rng;
+std::mt19937 gen(rng());
+std::uniform_int_distribution<int> distX(1, WIDTH - 2);
+std::uniform_int_distribution<int> distY(1, HEIGHT - 2);
+
 Grid::Grid()
 {
 	for (int i = 0; i < WIDTH; i++)
@@ -7,6 +12,8 @@ Grid::Grid()
 		for (int j = 0; j < HEIGHT; j++)
 		{
 			grid[i][j] = GridPoint(Point(i, j));
+			if (i == 0 || i == WIDTH - 1 || j == 0 || j == HEIGHT - 1)
+				grid[i][j].isWall = true;
 		}
 	}
 }
@@ -23,10 +30,6 @@ void Grid::embedSnake(Snake& s)
 
 void Grid::generateFood(size_t num)
 {
-	std::random_device rng;
-	std::mt19937 gen(rng());
-	std::uniform_int_distribution<int> distX(1, WIDTH - 2);
-	std::uniform_int_distribution<int> distY(1, HEIGHT - 2);
 	size_t count = 0;
 	while (count < num)
 	{
@@ -42,10 +45,6 @@ void Grid::generateFood(size_t num)
 
 void Grid::generatePotion(size_t num)
 {
-	std::random_device rng;
-	std::mt19937 gen(rng());
-	std::uniform_int_distribution<int> distX(1, WIDTH - 2);
-	std::uniform_int_distribution<int> distY(1, HEIGHT - 2);
 	size_t count = 0;
 	while (count < num)
 	{
@@ -91,7 +90,7 @@ void Grid::print() const
 	{
 		for (size_t j = 0; j < HEIGHT; j++)
 		{
-			if (i == 0 || i == WIDTH - 1 || j == 0 || j == HEIGHT - 1)
+			if (grid[i][j].isWall)
 				std::cout << "#";
 			else if (grid[i][j].isHead)
 				std::cout << "H";

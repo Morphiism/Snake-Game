@@ -70,6 +70,7 @@ struct GridPoint
 	Point pos;
 	bool isHead = false;
 	bool isSnake = false;
+	bool isWall = false;
 	bool isFood = false;
 	bool isPotion = false;
 
