@@ -63,7 +63,8 @@ void Game::print() const
 		break;
 	}
 	std::cout << foodNum << "食物 ";
-	std::cout << poisonNum << "毒药";
+	std::cout << poisonNum << "毒药 ";
+	std::cout << wallNum << "障碍物";
 	pointat(HEIGHT + 2, 3);
 	std::cout << "当前长度：" << snake.getLength()
 		<< " 当前分数：" << std::fixed << std::setprecision(0) << score;
@@ -93,6 +94,8 @@ void Game::gaming()
 		if (key == 27)
 		{
 			SetConsoleTitle(TEXT("按任意键继续，按ESC键结束游戏"));
+			pointat(HEIGHT + 2, WIDTH / 2);
+			std::cout << "游戏暂停中...";
 			waitKey();
 			getKey();
 			if (key == 27)
