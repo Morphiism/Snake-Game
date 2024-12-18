@@ -58,10 +58,11 @@ public:
 	int getLength() const { return length; }
 	int getInitSpeed() const { return initSpeed; }
 	int getSpeed() const { return int(initSpeed * pow(0.9, length / 5)); }
-	bool isDead() const { return !isAlive; }
+	bool isDead() const { return !isAlive || length == 0; }
 	void changeDir(Point d) { body[0].changeDir(d); }
 	void move();
 	void grow() { body.push_back(Body(body.back().pos - body.back().dir, body.back().dir)); length++; }
+	void shrink() { body.pop_back(); length--; }
 };
 
 struct GridPoint
@@ -70,6 +71,7 @@ struct GridPoint
 	bool isHead = false;
 	bool isSnake = false;
 	bool isFood = false;
+	bool isPotion = false;
 
 	GridPoint() : pos(Point(0, 0)) {}
 	GridPoint(Point p) : pos(p) {}
@@ -80,11 +82,11 @@ class Grid
 private:
 	GridPoint grid[WIDTH][HEIGHT];
 	void embedSnake(Snake& s);
-	void deleteFood(Point& p) { grid[p.x][p.y].isFood = false; }
 
 public:
 	Grid();
 	void generateFood(size_t num = 1);
+	void generatePotion(size_t num = 1);
 	void update(Snake& s);
 	void print() const;
 };
@@ -96,12 +98,13 @@ private:
 	Snake snake;
 	int key = 0;
 	int foodNum = 1;
+	int potionNum = 0;
 	void waitKey();
 	void getKey();
 
 public:
 	Game() {}
-	Game(int s, int food) : foodNum(food) { snake = Snake(Point(WIDTH / 2, HEIGHT / 2), s); }
+	Game(int s, int food, int potion) : snake(Point(WIDTH / 2, HEIGHT / 2), s), foodNum(food), potionNum(potion) {}
 	void init();
 	void gaming();
 	void update();

@@ -5,8 +5,8 @@ void Game::init()
 	SetConsoleTitle(TEXT("按任意键开始游戏"));
 	grid = Grid();
 	snake = Snake(Point(WIDTH / 2, HEIGHT / 2), snake.getInitSpeed());
-	key = 0;
 	grid.generateFood(foodNum);
+	grid.generatePotion(potionNum);
 }
 
 void Game::waitKey()
@@ -58,13 +58,14 @@ void Game::print() const
 		std::cout << "困难 ";
 		break;
 	}
-	std::cout << foodNum << "食物";
+	std::cout << foodNum << "食物 ";
+	std::cout << potionNum << "毒药";
 	pointat(HEIGHT + 2, 3);
 	std::cout << "当前长度：" << snake.getLength();
 	std::ifstream file("highest.dat");
 	int highest;
 	file >> highest;
-	highest = max(highest, 1);
+	highest = max(highest, 0);
 	file.close();
 	pointat(HEIGHT + 2, 5);
 	std::cout << "最大长度：" << highest;
@@ -103,7 +104,7 @@ void Game::gaming()
 	std::ifstream file("highest.dat");
 	int highest;
 	file >> highest;
-	highest = max(highest, 1);
+	highest = max(highest, 0);
 	file.close();
 	if (length > highest)
 	{
