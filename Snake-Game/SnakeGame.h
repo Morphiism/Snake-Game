@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SNAKEGAME_H
+#define SNAKEGAME_H
 
 #include <iostream>
 #include <fstream>
@@ -114,3 +115,5 @@ inline void pointat(size_t x, size_t y)
 	coord.Y = y;
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
+
+#endif
