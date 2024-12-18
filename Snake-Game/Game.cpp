@@ -93,14 +93,14 @@ void Game::gaming()
 		getKey();
 		if (key == 27)
 		{
-			SetConsoleTitle(TEXT("按任意键继续，按ESC键结束游戏"));
+			SetConsoleTitle(TEXT("按任意键继续，按ESC键结束"));
 			pointat(HEIGHT + 2, WIDTH / 2);
 			std::cout << "游戏暂停中...";
 			waitKey();
 			getKey();
 			if (key == 27)
 				break;
-			SetConsoleTitle(TEXT("贪吃蛇（按ESC键暂停游戏）"));
+			SetConsoleTitle(TEXT("按WASD控制，按ESC键暂停"));
 		}
 		update();
 		print();
