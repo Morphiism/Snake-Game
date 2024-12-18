@@ -9,6 +9,7 @@ int main()
 	while (true)
 	{
 		system("cls");
+		SetConsoleTitle(TEXT("贪吃蛇"));
 		std::cout << "请选择游戏难度：1. 简单 2. 中等 3. 困难" << std::endl;
 		std::cin >> speedMode;
 		switch (speedMode)

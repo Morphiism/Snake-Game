@@ -47,8 +47,6 @@ void Game::print() const
 {
 	system("cls");
 	grid.print();
-	pointat(HEIGHT + 2, WIDTH / 2);
-	std::cout << "按WASD控制方向";
 	pointat(HEIGHT + 2, 1);
 	std::cout << "当前模式：";
 	switch (snake.getInitSpeed())
@@ -85,7 +83,7 @@ void Game::gaming()
 	init();
 	waitKey();
 	getKey();
-	SetConsoleTitle(TEXT("贪吃蛇（按ESC键暂停游戏）"));
+	SetConsoleTitle(TEXT("按WASD控制，按ESC键暂停"));
 
 	while (!snake.isDead())
 	{
@@ -104,9 +102,9 @@ void Game::gaming()
 		print();
 	}
 
-	pointat(HEIGHT + 2, WIDTH / 2 + 2);
+	pointat(HEIGHT + 2, WIDTH / 2);
 	std::cout << "游戏结束！您的分数为：" << std::fixed << std::setprecision(0) << score;
-	SetConsoleTitle(TEXT("按任意键重新开始"));
+	SetConsoleTitle(TEXT("按Enter键重新开始"));
 	std::ifstream file("highest.dat");
 	double highest;
 	file >> highest;
@@ -114,11 +112,14 @@ void Game::gaming()
 	file.close();
 	if (score > highest)
 	{
-		pointat(HEIGHT + 2, WIDTH / 2 + 4);
-		std::cout << "新纪录！";
+		std::cout << " 新纪录！";
 		std::ofstream file("highest.dat");
 		file << score;
 		file.close();
 	}
-	waitKey();
+	while (key != 13)
+	{
+		waitKey();
+		getKey();
+	}
 }
