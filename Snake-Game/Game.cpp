@@ -38,7 +38,7 @@ void Game::update()
 	grid.update(snake);
 	if (snake.getLength() > length)
 	{
-		score += int(10 * getMultiplier());
+		score += 10 * getMultiplier();
 	}
 	key = 0;
 }
