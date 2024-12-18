@@ -15,6 +15,14 @@
 constexpr size_t WIDTH = 20;
 constexpr size_t HEIGHT = 40;
 
+inline void pointat(size_t x, size_t y)
+{
+	COORD coord;
+	coord.X = x;
+	coord.Y = y;
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+}
+
 struct Point
 {
 	int x, y;
@@ -121,13 +129,5 @@ public:
 			pow(1.1, snake.getLength() / 5) * (200.0 / snake.getInitSpeed());
 	}
 };
-
-inline void pointat(size_t x, size_t y)
-{
-	COORD coord;
-	coord.X = x;
-	coord.Y = y;
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
-}
 
 #endif
