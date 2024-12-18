@@ -34,7 +34,12 @@ void Game::update()
 	else if (key == 'd' && (snake.getLength() == 1 || snake.getDir() != Point(0, -1)))
 		snake.changeDir(Point(0, 1));
 	snake.move();
+	int length = snake.getLength();
 	grid.update(snake);
+	if (snake.getLength() > length)
+	{
+		score += 10 * getMultiplier();
+	}
 	key = 0;
 }
 
@@ -42,8 +47,6 @@ void Game::print() const
 {
 	system("cls");
 	grid.print();
-	pointat(HEIGHT + 2, WIDTH / 2);
-	std::cout << "按WASD控制方向";
 	pointat(HEIGHT + 2, 1);
 	std::cout << "当前模式：";
 	switch (snake.getInitSpeed())
@@ -61,16 +64,18 @@ void Game::print() const
 	std::cout << foodNum << "食物 ";
 	std::cout << potionNum << "毒药";
 	pointat(HEIGHT + 2, 3);
-	std::cout << "当前长度：" << snake.getLength();
+	std::cout << "当前长度：" << snake.getLength()
+		<< " 当前分数：" << std::fixed << std::setprecision(0) << score;
+	std::cout << std::setprecision(2) << " (" << getMultiplier() << "x)";
 	std::ifstream file("highest.dat");
-	int highest;
+	double highest;
 	file >> highest;
 	highest = max(highest, 0);
 	file.close();
 	pointat(HEIGHT + 2, 5);
-	std::cout << "最大长度：" << highest;
+	std::cout << "最高分：" << std::fixed << std::setprecision(0) << highest;
 	pointat(HEIGHT + 2, 7);
-	std::cout << "当前速度：" << snake.getSpeed() << " ms/it";
+	std::cout << "当前速度：" << snake.getSpeed() << " (ms/it)";
 }
 
 void Game::gaming()
@@ -78,7 +83,7 @@ void Game::gaming()
 	init();
 	waitKey();
 	getKey();
-	SetConsoleTitle(TEXT("贪吃蛇（按ESC键暂停游戏）"));
+	SetConsoleTitle(TEXT("按WASD控制，按ESC键暂停"));
 
 	while (!snake.isDead())
 	{
@@ -97,22 +102,24 @@ void Game::gaming()
 		print();
 	}
 
-	int length = snake.getLength();
-	pointat(HEIGHT + 2, WIDTH / 2 + 2);
-	std::cout << "游戏结束！您的最终长度为：" << length;
-	SetConsoleTitle(TEXT("按任意键重新开始"));
+	pointat(HEIGHT + 2, WIDTH / 2);
+	std::cout << "游戏结束！您的分数为：" << std::fixed << std::setprecision(0) << score;
+	SetConsoleTitle(TEXT("按Enter键重新开始"));
 	std::ifstream file("highest.dat");
-	int highest;
+	double highest;
 	file >> highest;
 	highest = max(highest, 0);
 	file.close();
-	if (length > highest)
+	if (score > highest)
 	{
-		pointat(HEIGHT + 2, WIDTH / 2 + 4);
-		std::cout << "新纪录！";
+		std::cout << " 新纪录！";
 		std::ofstream file("highest.dat");
-		file << length;
+		file << score;
 		file.close();
 	}
-	waitKey();
+	while (key != 13)
+	{
+		waitKey();
+		getKey();
+	}
 }

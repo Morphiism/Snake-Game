@@ -22,9 +22,9 @@ void Grid::embedSnake(Snake& s)
 {
 	std::vector<Point> pos = s.getPos();
 	grid[pos[0].x][pos[0].y].isHead = true;
-	for (size_t i = 0; i < pos.size(); i++)
+	for (size_t i = 1; i < pos.size(); i++)
 	{
-		grid[pos[i].x][pos[i].y].isSnake = true;
+		grid[pos[i].x][pos[i].y].isBody = true;
 	}
 }
 
@@ -35,7 +35,7 @@ void Grid::generateFood(size_t num)
 	{
 		int x = distX(gen);
 		int y = distY(gen);
-		if (!grid[x][y].isSnake && !grid[x][y].isFood && !grid[x][y].isPotion)
+		if (!grid[x][y].isBody && !grid[x][y].isFood && !grid[x][y].isPotion && !grid[x][y].isHead)
 		{
 			grid[x][y].isFood = true;
 			count++;
@@ -50,7 +50,7 @@ void Grid::generatePotion(size_t num)
 	{
 		int x = distX(gen);
 		int y = distY(gen);
-		if (!grid[x][y].isSnake && !grid[x][y].isFood && !grid[x][y].isPotion)
+		if (!grid[x][y].isBody && !grid[x][y].isFood && !grid[x][y].isPotion && !grid[x][y].isHead)
 		{
 			grid[x][y].isPotion = true;
 			count++;
@@ -65,7 +65,7 @@ void Grid::update(Snake& s)
 		for (int j = 0; j < HEIGHT; j++)
 		{
 			grid[i][j].isHead = false;
-			grid[i][j].isSnake = false;
+			grid[i][j].isBody = false;
 		}
 	}
 	embedSnake(s);
@@ -82,6 +82,10 @@ void Grid::update(Snake& s)
 		grid[head.x][head.y].isPotion = false;
 		generatePotion();
 	}
+	else if (grid[head.x][head.y].isWall || grid[head.x][head.y].isBody)
+	{
+		s.die();
+	}
 }
 
 void Grid::print() const
@@ -94,7 +98,7 @@ void Grid::print() const
 				std::cout << "#";
 			else if (grid[i][j].isHead)
 				std::cout << "H";
-			else if (grid[i][j].isSnake)
+			else if (grid[i][j].isBody)
 				std::cout << "B";
 			else if (grid[i][j].isFood)
 				std::cout << "F";
