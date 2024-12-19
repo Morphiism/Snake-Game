@@ -80,7 +80,7 @@ struct GridPoint
 	bool isBody = false;
 	bool isWall = false;
 	bool isFood = false;
-	bool isPotion = false;
+	bool isPoison = false;
 
 	GridPoint() : pos(Point(0, 0)) {}
 	GridPoint(Point p) : pos(p) {}

@@ -35,7 +35,7 @@ void Grid::generateFood(size_t num)
 	{
 		int x = distX(gen);
 		int y = distY(gen);
-		if (!grid[x][y].isBody && !grid[x][y].isFood && !grid[x][y].isPotion &&
+		if (!grid[x][y].isBody && !grid[x][y].isFood && !grid[x][y].isPoison &&
 			!grid[x][y].isHead && !grid[x][y].isWall)
 		{
 			grid[x][y].isFood = true;
@@ -51,10 +51,10 @@ void Grid::generatePotion(size_t num)
 	{
 		int x = distX(gen);
 		int y = distY(gen);
-		if (!grid[x][y].isBody && !grid[x][y].isFood && !grid[x][y].isPotion &&
+		if (!grid[x][y].isBody && !grid[x][y].isFood && !grid[x][y].isPoison &&
 			!grid[x][y].isHead && !grid[x][y].isWall)
 		{
-			grid[x][y].isPotion = true;
+			grid[x][y].isPoison = true;
 			count++;
 		}
 	}
@@ -67,7 +67,7 @@ void Grid::generateWall(size_t num)
 	{
 		int x = distX(gen);
 		int y = distY(gen);
-		if (!grid[x][y].isBody && !grid[x][y].isFood && !grid[x][y].isPotion &&
+		if (!grid[x][y].isBody && !grid[x][y].isFood && !grid[x][y].isPoison &&
 			!grid[x][y].isHead && !grid[x][y].isWall)
 		{
 			grid[x][y].isWall = true;
@@ -94,10 +94,10 @@ void Grid::update(Snake& s)
 		grid[head.x][head.y].isFood = false;
 		generateFood();
 	}
-	else if (grid[head.x][head.y].isPotion)
+	else if (grid[head.x][head.y].isPoison)
 	{
 		s.shrink();
-		grid[head.x][head.y].isPotion = false;
+		grid[head.x][head.y].isPoison = false;
 		generatePotion();
 	}
 	else if (grid[head.x][head.y].isWall || grid[head.x][head.y].isBody)
@@ -120,7 +120,7 @@ void Grid::print() const
 				std::cout << "B";
 			else if (grid[i][j].isFood)
 				std::cout << "F";
-			else if (grid[i][j].isPotion)
+			else if (grid[i][j].isPoison)
 				std::cout << "P";
 			else
 				std::cout << " ";
