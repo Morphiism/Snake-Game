@@ -134,6 +134,7 @@ void Game::gaming()
 		&written
 	);
 
+	print();
 	waitKey();
 	getKey();
 	SetConsoleTitle(TEXT("°´WASD¿ØÖÆ£¬°´ESC¼üÔÝÍ£"));
