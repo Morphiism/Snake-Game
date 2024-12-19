@@ -1,5 +1,6 @@
 #ifndef SNAKEGAME_H
 #define SNAKEGAME_H
+#define _CRT_SECURE_NO_WARNINGS
 
 #include <iostream>
 #include <fstream>
@@ -12,16 +13,10 @@
 #include <random>
 #include <iomanip>
 
+
+
 constexpr size_t WIDTH = 20;
 constexpr size_t HEIGHT = 40;
-
-inline void pointat(size_t x, size_t y)
-{
-	COORD coord;
-	coord.X = x;
-	coord.Y = y;
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
-}
 
 struct Point
 {
@@ -101,7 +96,7 @@ public:
 	void generateWall(size_t num = 1);
 	void update(Snake& s);
 	void randomWalk();
-	void print() const;
+	void print(HANDLE*) const;
 };
 
 class Game
@@ -131,7 +126,7 @@ public:
 	double getMultiplier() const
 	{
 		return (1.0 - 0.02 * (foodNum - 1) + 0.1 * poisonNum + 0.2 * wallNum) *
-			pow(1.1, snake.getLength() / 5) * (200.0 / snake.getInitSpeed()) * (randomWalk ? 3 : 1);
+			pow(1.1, snake.getLength() / 5) * (200.0 / snake.getInitSpeed()) * (randomWalk ? 2 : 1);
 	}
 };
 
