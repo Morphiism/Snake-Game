@@ -78,7 +78,7 @@ void Game::print() const
 
 	coord.X += 15;
 	char dest[100];
-	sprintf(dest, "%d食物 %d毒药 %d障碍物 随机游走%s 最大迭代%d", foodNum, poisonNum, wallNum, randomWalk ? "开启" : "关闭", maxIteration);
+	sprintf(dest, "%d食物 %d毒药 %d障碍物 随机游走%s 最大迭代数%d", foodNum, poisonNum, wallNum, randomWalk ? "开启" : "关闭", maxIteration);
 	WriteConsoleOutputCharacterA(*houtpoint, dest, strlen(dest), coord, &bytes);
 
 	coord.X = HEIGHT + 2;
