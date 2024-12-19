@@ -5,6 +5,11 @@ std::mt19937 gen(rng());
 std::uniform_int_distribution<int> distX(1, WIDTH - 2);
 std::uniform_int_distribution<int> distY(1, HEIGHT - 2);
 
+extern HANDLE hOutput;
+extern HANDLE* houtpoint;
+extern COORD coord;
+extern DWORD bytes;
+
 Grid::Grid()
 {
 	for (int i = 0; i < WIDTH; i++)
@@ -103,26 +108,28 @@ void Grid::update(Snake& s)
 	}
 }
 
-void Grid::print() const
+void Grid::print(HANDLE* houtpoint) const
 {
 	for (size_t i = 0; i < WIDTH; i++)
 	{
 		for (size_t j = 0; j < HEIGHT; j++)
 		{
+			coord.X = j;
+			coord.Y = i;
 			if (grid[i][j].isWall)
-				std::cout << "#";
+				WriteConsoleOutputCharacterA(*houtpoint, "#", 1, coord, &bytes);
 			else if (grid[i][j].isHead)
-				std::cout << "H";
+				WriteConsoleOutputCharacterA(*houtpoint, "H", 1, coord, &bytes);
 			else if (grid[i][j].isBody)
-				std::cout << "B";
+				WriteConsoleOutputCharacterA(*houtpoint, "B", 1, coord, &bytes);
 			else if (grid[i][j].isFood)
-				std::cout << "F";
+				WriteConsoleOutputCharacterA(*houtpoint, "F", 1, coord, &bytes);
 			else if (grid[i][j].isPoison)
-				std::cout << "P";
-			else
-				std::cout << " ";
+				WriteConsoleOutputCharacterA(*houtpoint, "P", 1, coord, &bytes);
+			else {
+				WriteConsoleOutputCharacterA(*houtpoint, " ", 1, coord, &bytes);
+			}
 		}
-		std::cout << std::endl;
 	}
 }
 
