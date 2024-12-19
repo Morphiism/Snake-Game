@@ -35,6 +35,8 @@ void Game::update()
 	else if (key == 'd' && (snake.getLength() == 1 || snake.getDir() != Point(0, -1)))
 		snake.changeDir(Point(0, 1));
 	snake.move();
+	if (randomWalk)
+		grid.randomWalk();
 	int length = snake.getLength();
 	grid.update(snake);
 	if (snake.getLength() > length)
@@ -64,7 +66,8 @@ void Game::print() const
 	}
 	std::cout << foodNum << "食物 ";
 	std::cout << poisonNum << "毒药 ";
-	std::cout << wallNum << "障碍物";
+	std::cout << wallNum << "障碍物 ";
+	std::cout << "随机游走" << (randomWalk ? "开启" : "关闭");
 	pointat(HEIGHT + 2, 3);
 	std::cout << "当前长度：" << snake.getLength()
 		<< " 当前分数：" << std::fixed << std::setprecision(0) << score;
@@ -78,6 +81,8 @@ void Game::print() const
 	std::cout << "最高分：" << std::fixed << std::setprecision(0) << highest;
 	pointat(HEIGHT + 2, 7);
 	std::cout << "当前速度：" << snake.getSpeed() << " (ms/it)";
+	pointat(HEIGHT + 2, 9);
+	std::cout << "当前迭代：" << iteration;
 }
 
 void Game::gaming()
@@ -94,7 +99,7 @@ void Game::gaming()
 		if (key == 27)
 		{
 			SetConsoleTitle(TEXT("按任意键继续，按ESC键结束"));
-			pointat(HEIGHT + 2, WIDTH / 2);
+			pointat(HEIGHT + 2, WIDTH - 2);
 			std::cout << "游戏暂停中...";
 			waitKey();
 			getKey();
@@ -103,10 +108,11 @@ void Game::gaming()
 			SetConsoleTitle(TEXT("按WASD控制，按ESC键暂停"));
 		}
 		update();
+		iteration++;
 		print();
 	}
 
-	pointat(HEIGHT + 2, WIDTH / 2);
+	pointat(HEIGHT + 2, WIDTH - 2);
 	std::cout << "游戏结束！您的分数为：" << std::fixed << std::setprecision(0) << score;
 	SetConsoleTitle(TEXT("按Enter键重新开始"));
 	std::ifstream file("highest.dat");

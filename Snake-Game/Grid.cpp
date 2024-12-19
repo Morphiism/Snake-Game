@@ -35,8 +35,7 @@ void Grid::generateFood(size_t num)
 	{
 		int x = distX(gen);
 		int y = distY(gen);
-		if (!grid[x][y].isBody && !grid[x][y].isFood && !grid[x][y].isPoison &&
-			!grid[x][y].isHead && !grid[x][y].isWall)
+		if (grid[x][y].isEmpty())
 		{
 			grid[x][y].isFood = true;
 			count++;
@@ -51,8 +50,7 @@ void Grid::generatePotion(size_t num)
 	{
 		int x = distX(gen);
 		int y = distY(gen);
-		if (!grid[x][y].isBody && !grid[x][y].isFood && !grid[x][y].isPoison &&
-			!grid[x][y].isHead && !grid[x][y].isWall)
+		if (grid[x][y].isEmpty())
 		{
 			grid[x][y].isPoison = true;
 			count++;
@@ -67,8 +65,7 @@ void Grid::generateWall(size_t num)
 	{
 		int x = distX(gen);
 		int y = distY(gen);
-		if (!grid[x][y].isBody && !grid[x][y].isFood && !grid[x][y].isPoison &&
-			!grid[x][y].isHead && !grid[x][y].isWall)
+		if (grid[x][y].isEmpty())
 		{
 			grid[x][y].isWall = true;
 			count++;
@@ -126,5 +123,57 @@ void Grid::print() const
 				std::cout << " ";
 		}
 		std::cout << std::endl;
+	}
+}
+
+Point Grid::randomDir()
+{
+	std::uniform_int_distribution<int> distDir(0, 3);
+	int dir = distDir(gen);
+	switch (dir)
+	{
+	case 0:
+		return Point(-1, 0);
+	case 1:
+		return Point(1, 0);
+	case 2:
+		return Point(0, -1);
+	case 3:
+		return Point(0, 1);
+	}
+}
+
+void Grid::randomWalk()
+{
+	std::vector<Point> foods, poisons;
+	for (int i = 0; i < WIDTH; i++)
+	{
+		for (int j = 0; j < HEIGHT; j++)
+		{
+			if (grid[i][j].isFood)
+				foods.push_back(Point(i, j));
+			else if (grid[i][j].isPoison)
+				poisons.push_back(Point(i, j));
+		}
+	}
+	for (Point food : foods)
+	{
+		Point dir = randomDir();
+		Point next = food + dir;
+		if (grid[next.x][next.y].isEmpty())
+		{
+			grid[food.x][food.y].isFood = false;
+			grid[next.x][next.y].isFood = true;
+		}
+	}
+	for (Point poison : poisons)
+	{
+		Point dir = randomDir();
+		Point next = poison + dir;
+		if (grid[next.x][next.y].isEmpty())
+		{
+			grid[poison.x][poison.y].isPoison = false;
+			grid[next.x][next.y].isPoison = true;
+		}
 	}
 }
