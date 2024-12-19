@@ -17,8 +17,6 @@ DWORD bytes = 0;
 void Game::init()
 {
 	SetConsoleTitle(TEXT("按任意键开始游戏"));
-	//grid = Grid();
-	//snake = Snake(Point(WIDTH / 2, HEIGHT / 2), snake.getInitSpeed());
 	grid.generateFood(foodNum);
 	grid.generatePotion(poisonNum);
 	grid.generateWall(wallNum);
@@ -80,7 +78,7 @@ void Game::print() const
 
 	coord.X += 15;
 	char dest[100];
-	sprintf(dest, "%d食物 %d毒药 %d障碍物 随机游走%s", foodNum, poisonNum, wallNum, randomWalk ? "开启" : "关闭");
+	sprintf(dest, "%d食物 %d毒药 %d障碍物 随机游走%s 最大迭代%d", foodNum, poisonNum, wallNum, randomWalk ? "开启" : "关闭", maxIteration);
 	WriteConsoleOutputCharacterA(*houtpoint, dest, strlen(dest), coord, &bytes);
 
 	coord.X = HEIGHT + 2;
@@ -106,7 +104,7 @@ void Game::print() const
 
 	coord.X = HEIGHT + 2;
 	coord.Y = 9;
-	sprintf(dest, "当前迭代：%d", iteration);
+	sprintf(dest, "当前迭代：%d/%d", iteration, maxIteration);
 	WriteConsoleOutputCharacterA(*houtpoint, dest, strlen(dest), coord, &bytes);
 
 	//设置新的缓冲区为活动显示缓冲
@@ -142,6 +140,8 @@ void Game::gaming()
 	
 	while (!snake.isDead())
 	{
+		if (maxIteration > 0 && iteration >= maxIteration)
+			break;
 		Sleep(snake.getSpeed());
 		getKey();
 		if (key == 27)

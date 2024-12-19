@@ -9,6 +9,7 @@ int main()
 	int wallNum;
 	int randomWalkMode;
 	bool randomWalk;
+	int maxIteration;
 	std::cout << "请选择游戏难度：1. 简单(x1) 2. 中等(x2) 3. 困难(x4)" << std::endl;
 	std::cin >> speedMode;
 	switch (speedMode)
@@ -48,7 +49,7 @@ int main()
 		std::cout << "不支持的输入，障碍物数量默认为0" << std::endl;
 		wallNum = 0;
 	}
-	std::cout << "是否开启随机游走？1. 否(1x) 2. 是(2x)" << std::endl;
+	std::cout << "是否开启随机游走？1. 否(1x) 2. 是(3x)" << std::endl;
 	std::cin >> randomWalkMode;
 	switch (randomWalkMode)
 	{
@@ -63,13 +64,20 @@ int main()
 		randomWalk = false;
 		break;
 	}
+	std::cout << "请输入最大迭代次数：(0为无限)" << std::endl;
+	std::cin >> maxIteration;
+	if (maxIteration < 0)
+	{
+		std::cout << "不支持的输入，最大迭代次数默认为0" << std::endl;
+		maxIteration = 0;
+	}
 	std::cout << "设置成功，按任意键开始游戏" << std::endl;
 
 	
 	while (true)
 	{
 		SetConsoleTitle(TEXT("贪吃蛇"));
-		Game game(speed, foodNum, poisonNum, wallNum, randomWalk);
+		Game game(speed, foodNum, poisonNum, wallNum, randomWalk, maxIteration);
 		game.gaming();
 	}
 

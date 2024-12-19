@@ -111,14 +111,15 @@ private:
 	int poisonNum = 0;
 	int wallNum = 0;
 	int iteration = 0;
+	int maxIteration = 0;
 	bool randomWalk = false;
 	void waitKey();
 	void getKey();
 
 public:
 	Game() {}
-	Game(int s, int food, int potion, int wall, bool rw) : 
-		snake(Point(WIDTH / 2, HEIGHT / 2), s), foodNum(food), poisonNum(potion), wallNum(wall), randomWalk(rw) {}
+	Game(int s, int food, int potion, int wall, bool rw, int maxIt) : 
+		snake(Point(WIDTH / 2, HEIGHT / 2), s), foodNum(food), poisonNum(potion), wallNum(wall), randomWalk(rw), maxIteration(maxIt) {}
 	void init();
 	void gaming();
 	void update();
@@ -126,7 +127,7 @@ public:
 	double getMultiplier() const
 	{
 		return (1.0 - 0.02 * (foodNum - 1) + 0.1 * poisonNum + 0.2 * wallNum) *
-			pow(1.1, snake.getLength() / 5) * (200.0 / snake.getInitSpeed()) * (randomWalk ? 2 : 1);
+			pow(1.1, snake.getLength() / 5) * (200.0 / snake.getInitSpeed()) * (randomWalk ? 3 : 1);
 	}
 };
 
