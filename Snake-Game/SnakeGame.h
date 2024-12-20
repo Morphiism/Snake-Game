@@ -94,6 +94,7 @@ public:
 	void generateFood(size_t num = 1);
 	void generatePotion(size_t num = 1);
 	void generateWall(size_t num = 1);
+	void deleteWall();
 	void update(Snake& s);
 	void randomWalk();
 	void print(HANDLE*) const;

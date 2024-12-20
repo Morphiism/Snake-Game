@@ -50,10 +50,14 @@ void Game::update()
 	if (randomWalk)
 		grid.randomWalk();
 	int length = snake.getLength();
+	int length5 = length / 5;
 	grid.update(snake);
 	if (snake.getLength() > length)
-	{
 		score += 10 * getMultiplier();
+	if (snake.getLength() / 5 > length5)
+	{
+		grid.deleteWall();
+		grid.generateWall(wallNum);
 	}
 	key = 0;
 }

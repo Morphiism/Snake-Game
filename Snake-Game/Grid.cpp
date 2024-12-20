@@ -78,6 +78,18 @@ void Grid::generateWall(size_t num)
 	}
 }
 
+void Grid::deleteWall()
+{
+	for (int i = 1; i < WIDTH - 1; i++)
+	{
+		for (int j = 1; j < HEIGHT - 1; j++)
+		{
+			if (grid[i][j].isWall)
+				grid[i][j].isWall = false;
+		}
+	}
+}
+
 void Grid::update(Snake& s)
 {
 	for (int i = 0; i < WIDTH; i++)
