@@ -15,8 +15,8 @@
 
 
 
-constexpr size_t WIDTH = 20;
-constexpr size_t HEIGHT = 40;
+constexpr size_t WIDTH = 28;
+constexpr size_t HEIGHT = 56;
 
 struct Point
 {
