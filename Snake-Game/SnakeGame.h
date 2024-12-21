@@ -132,4 +132,4 @@ public:
 	}
 };
 
-#endif
+#endif // !SNAKEGAME_H
