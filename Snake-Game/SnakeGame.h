@@ -119,8 +119,8 @@ private:
 
 public:
 	Game() {}
-	Game(int s, int food, int potion, int wall, bool rw, int maxIt) : 
-		snake(Point(WIDTH / 2, HEIGHT / 2), s), foodNum(food), poisonNum(potion), wallNum(wall), randomWalk(rw), maxIteration(maxIt) {}
+	Game(int s, int food, int poison, int wall, bool rw, int maxIt) : 
+		snake(Point(WIDTH / 2, HEIGHT / 2), s), foodNum(food), poisonNum(poison), wallNum(wall), randomWalk(rw), maxIteration(maxIt) {}
 	void init();
 	void gaming();
 	void update();
