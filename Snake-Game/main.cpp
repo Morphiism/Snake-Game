@@ -54,7 +54,7 @@ int main()
 			std::cout << "不支持的输入，障碍物数量默认为0" << std::endl;
 			wallNum = 0;
 		}
-		std::cout << "是否开启随机游走？1. 否(x1) 2. 是(x3)" << std::endl;
+		std::cout << "是否开启随机游走？1. 否(x1) 2. 是(x5)" << std::endl;
 		std::cin >> randomWalkMode;
 		switch (randomWalkMode)
 		{

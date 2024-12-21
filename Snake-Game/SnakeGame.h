@@ -128,7 +128,7 @@ public:
 	double getMultiplier() const
 	{
 		return (1.0 - 0.02 * (foodNum - 1) + 0.1 * poisonNum + 0.2 * wallNum) *
-			pow(1.1, snake.getLength() / 5) * (200.0 / snake.getInitSpeed()) * (randomWalk ? 3 : 1);
+			pow(1.1, snake.getLength() / 5) * (200.0 / snake.getInitSpeed()) * (randomWalk ? 5 : 1);
 	}
 };
 
